@@ -17,8 +17,8 @@ class _CustomDropDownState extends State<CustomDropDown> {
       return Positioned(
           left: xPosition,
           width: width,
-          top: yPosition + height + 30,
-          height: height,
+          top: yPosition + height,
+          height: 4 * height + 45,
           child: DropDown(height));
     });
   }
@@ -49,6 +49,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       onTap: () {
         findDropdownData();
         if (isDropdownOpened) {
+          isDropdownOpened = !isDropdownOpened;
           setState(() {
             floatingDropdown.remove();
           });
@@ -87,12 +88,12 @@ class DropDown extends StatelessWidget {
   DropDown(this.itemHeigth);
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment(-0.85, -1.0),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 5),
-          ClipPath(
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 5),
+        Align(
+          alignment: Alignment(-0.85, 0),
+          child: ClipPath(
             clipper: ArrowClipper(),
             child: Container(
               height: 20,
@@ -100,31 +101,41 @@ class DropDown extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.red.shade600),
             ),
           ),
-          Container(
-            height: 4 * itemHeigth,
-            child: Column(
-              children: <Widget>[
-                DropdownItem(
-                  text: "Add new",
-                  icon: Icons.add_circle_outline,
-                ),
-                DropdownItem(
-                  text: "View profile",
-                  icon: Icons.person_outline,
-                ),
-                DropdownItem(
-                  text: "Settings",
-                  icon: Icons.settings,
-                ),
-                DropdownItem(
-                  text: "Logout",
-                  icon: Icons.exit_to_app,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+       // SizedBox(height: 1,),
+        Container(
+          height: 4 * itemHeigth + 16,
+          child: Column(
+            children: <Widget>[
+              DropdownItem(
+                text: "Add new",
+                icon: Icons.add_circle_outline,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              DropdownItem(
+                text: "View profile",
+                icon: Icons.person_outline,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              DropdownItem(
+                text: "Settings",
+                icon: Icons.settings,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              DropdownItem(
+                text: "Logout",
+                icon: Icons.exit_to_app,
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
@@ -159,22 +170,24 @@ class DropdownItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.red.shade600,
-      ),
-      child: Row(
-        children: <Widget>[
-          Text(text.toUpperCase(),
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600)),
-          Spacer(),
-          Icon(icon, color: Colors.white, size: 20)
-        ],
+    return Material(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.red.shade600,
+        ),
+        child: Row(
+          children: <Widget>[
+            Text(text.toUpperCase(),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600)),
+            Spacer(),
+            Icon(icon, color: Colors.white, size: 20)
+          ],
+        ),
       ),
     );
   }
